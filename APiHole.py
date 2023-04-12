@@ -1,10 +1,10 @@
 # Interface for using PiHole with API
 import logging
-import os
-import json
 import requests
 
 logging.basicConfig(level=logging.INFO)
+
+TotalURL='http://{0}/admin/api.php?{1}&auth={2}'
 
 class PiHole():
 
@@ -14,9 +14,10 @@ class PiHole():
         - IP: the PiHole mashine URL
         - API: PiHole API key
         """
-        TotalURL='http://'+IP+'/admin/api.php?summary&auth='+API
+        # TotalURL='http://'+IP+'/admin/api.php?summary&auth='+API
         try:
-            resp = requests.get(url=TotalURL)
+            global TotalURL
+            resp = requests.get(url=TotalURL.format(IP,'summery',API))
             logging.info('Getting data from PiHole address '+IP)
             data=resp.json()
             ans='ADS today:'+data['ads_percentage_today']+'%\n'+ \
@@ -31,9 +32,8 @@ class PiHole():
         - IP: the PiHole mashine URL
         - API: PiHole API key
         """
-        TotalURL='http://'+IP+'/admin/api.php?version&auth='+API
         try:
-            resp = requests.get(url=TotalURL)
+            resp = requests.get(url=TotalURL.format(IP,'versioni',API))
             logging.info('Getting data from PiHole address '+IP)
             data=resp.json()
             ans='Version:'+data['version']
@@ -47,9 +47,8 @@ class PiHole():
         - IP: the PiHole mashine URL
         - API: PiHole API key
         """
-        TotalURL='http://'+IP+'/admin/api.php?enable&auth='+API
         try:
-            resp = requests.get(url=TotalURL)
+            resp = requests.get(url=TotalURL.format(IP,'enable',API))
             logging.info('Getting data from PiHole address '+IP)
             data=resp.json()
             ans=data['status']
@@ -64,9 +63,8 @@ class PiHole():
         - API: PiHole API key
         - Time: time to disable in sec, set to 0 for infinate time
         """
-        TotalURL='http://'+IP+'/admin/api.php?disable='+str(Time)+'&auth='+API
         try:
-            resp = requests.get(url=TotalURL)
+            resp = requests.get(url=TotalURL.format(IP,'disable='+str(Time),API))
             logging.info('Getting data from PiHole address '+IP)
             data=resp.json()
             ans=data['status']
@@ -81,9 +79,8 @@ class PiHole():
         - API: PiHole API key
         """
         TopNo=5
-        TotalURL='http://'+IP+'/admin/api.php?topItems='+str(TopNo)+'&auth='+API
         try:
-            resp = requests.get(url=TotalURL)
+            resp = requests.get(url=TotalURL.format(IP,'topItems='+str(TopNo),API))
             logging.info('Getting data from PiHole address '+IP)
             data=resp.json()
             return data
@@ -97,9 +94,8 @@ class PiHole():
         - API: PiHole API key
         """
         TopNo=5
-        TotalURL='http://'+IP+'/admin/api.php?topClients='+str(TopNo)+'&auth='+API
         try:
-            resp = requests.get(url=TotalURL)
+            resp = requests.get(url=TotalURL.format(IP,'topClients='+str(TopNo),API))
             logging.info('Getting data from PiHole address '+IP)
             data=resp.json()
             return data['top_sources']
@@ -113,9 +109,8 @@ class PiHole():
         - API: PiHole API key
         """
         TopNo=5
-        TotalURL='http://'+IP+'/admin/api.php?topClientsBlocked='+str(TopNo)+'&auth='+API
         try:
-            resp = requests.get(url=TotalURL)
+            resp = requests.get(url=TotalURL.format(IP,'topClientsBlocked='+str(TopNo),API))
             logging.info('Getting data from PiHole address '+IP)
             data=resp.json()
             return data['top_sources_blocked']
@@ -128,9 +123,8 @@ class PiHole():
         - IP: the PiHole mashine URL
         - API: PiHole API key
         """
-        TotalURL='http://'+IP+'/admin/api.php?recentBlocked=&auth='+API
         try:
-            resp = requests.get(url=TotalURL)
+            resp = requests.get(url=TotalURL.format(IP,'enable',API))
             logging.info('Getting data from PiHole address '+IP)
             data=resp.json()
             return data
@@ -143,13 +137,15 @@ class PiHole():
         - IP: the PiHole mashine URL
         - API: PiHole API key
         - Domain: domain to add to WHITE list
+        Return True is sucsess
         """
-        TotalURL='http://'+IP+'/admin/api.php?list=white&add='+Domain+'&auth='+API
         try:
-            resp = requests.get(url=TotalURL)
+            resp = requests.get(url=TotalURL.format(IP,'list=white&add='+Domain,API))
             logging.info('Getting data from PiHole address '+IP)
+            return True
         except:
             logging.error('Error connecting to PiHole')
+            return False
 
     def AddBlack(IP:str,API:str,Domain:str):
         """
@@ -157,10 +153,12 @@ class PiHole():
         - IP: the PiHole mashine URL
         - API: PiHole API key
         - Domain: domain to add to BLACK list
+        Return True is sucsess
         """
-        TotalURL='http://'+IP+'/admin/api.php?list=black&add='+Domain+'&auth='+API
         try:
-            resp = requests.get(url=TotalURL)
+            resp = requests.get(url=TotalURL.format(IP,'list=black&add='+Domain,API))
             logging.info('Getting data from PiHole address '+IP)
+            return True
         except:
             logging.error('Error connecting to PiHole')
+            return False
