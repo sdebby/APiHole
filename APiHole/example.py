@@ -1,7 +1,7 @@
 from APiHole import PiHole
 
-PiHoleAPI='06b5b22528c72b4f6162a797cb029a4ff21202469673c89e5383d0170da0a27e'
-PiIP='192.168.1.9'
+PiHoleAPI='PiHole_API'
+PiIP='pi.hole'
 
 # get PiHole summery
 print(PiHole.GetSummery(PiIP,PiHoleAPI))
