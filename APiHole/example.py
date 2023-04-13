@@ -3,8 +3,14 @@ from APiHole import PiHole
 PiHoleAPI='PiHole_API'
 PiIP='pi.hole'
 
-# get PiHole summery
-print(PiHole.GetSummery(PiIP,PiHoleAPI))
+# get PiHole summary
+print(PiHole.GetSummary(PiIP,PiHoleAPI))
+
+# get PiHole status
+print(PiHole.GetStatus(PiIP,PiHoleAPI))
+
+# get PiHole gravisy status
+print(PiHole.GetGravity(PiIP,PiHoleAPI))
 
 # get PiHole top items, split and convert to list
 Items=PiHole.GetTopItems(PiIP,PiHoleAPI)
@@ -34,3 +40,6 @@ print(PiHole.GetTopClients(PiIP,PiHoleAPI))
 
 # Add google.com to white list
 print(PiHole.AddWhite(PiIP,PiHoleAPI,'google.com'))
+
+# Print API version (good for testing communication)
+print(PiHole.GetVer(PiIP))

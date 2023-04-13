@@ -5,38 +5,69 @@ import requests
 logging.basicConfig(level=logging.INFO)
 
 TotalURL='http://{0}/admin/api.php?{1}&auth={2}'
+TotalURLWOa='http://{0}/admin/api.php?{1}'
 
 class PiHole():
 
-    def GetSummery(IP:str,API:str):
+    def GetSummary(IP:str,API:str):
         """
-        Get PiHole summery
+        Get PiHole summary
         - IP: the PiHole mashine URL
         - API: PiHole API key
         """
-        # TotalURL='http://'+IP+'/admin/api.php?summary&auth='+API
         try:
-            global TotalURL
-            resp = requests.get(url=TotalURL.format(IP,'summery',API))
+            resp = requests.get(url=TotalURL.format(IP,'summary',API))
             logging.info('Getting data from PiHole address '+IP)
             data=resp.json()
-            ans='ADS today:'+data['ads_percentage_today']+'%\n'+ \
-            'Status '+data['status']
+            data.pop('gravity_last_updated')
+            data.pop('status')
+            # resultList = list(data.items())
+            # resultList.pop(-1)
+            # ans='ADS today:'+data['ads_percentage_today']+'%\n'+ 'Status '+data['status']
+            return data
+        except:
+            logging.error('Error connecting to PiHole')
+
+    def GetStatus(IP:str,API:str):
+        """
+        Get PiHole status
+        - IP: the PiHole mashine URL
+        - API: PiHole API key
+        """
+        try:
+            resp = requests.get(url=TotalURL.format(IP,'status',API))
+            logging.info('Getting data from PiHole address '+IP)
+            data=resp.json()
+            ans='Status: '+data['status']
             return ans
         except:
             logging.error('Error connecting to PiHole')
 
-    def GetVer(IP:str,API:str):
+    def GetGravity(IP:str,API:str):
         """
-        Get PiHole API version
+        Get PiHole gravity status
         - IP: the PiHole mashine URL
         - API: PiHole API key
         """
         try:
-            resp = requests.get(url=TotalURL.format(IP,'versioni',API))
+            resp = requests.get(url=TotalURL.format(IP,'summary',API))
             logging.info('Getting data from PiHole address '+IP)
             data=resp.json()
-            ans='Version:'+data['version']
+            return data['gravity_last_updated']
+        except:
+            logging.error('Error connecting to PiHole')
+
+    def GetVer(IP:str):
+        """
+        Get PiHole API version
+        - IP: the PiHole mashine URL
+        """
+        try:
+            TotalURLVer='http://{0}/admin/api.php?{1}'
+            resp = requests.get(url=TotalURLWOa.format(IP,'version'))
+            logging.info('Getting data from PiHole address '+IP)
+            data=resp.json()
+            ans='Version: '+str(data['version'])
             return ans
         except:
             logging.error('Error connecting to PiHole')
