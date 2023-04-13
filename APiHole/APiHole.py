@@ -87,12 +87,13 @@ class PiHole():
         except:
             logging.error('Error connecting to PiHole')
      
-    def Disable(IP:str,API:str,Time:int):
+    def Disable(IP:str,API:str,Time:int=0):
         """
         Disable PiHole
         - IP: the PiHole mashine URL
         - API: PiHole API key
         - Time: time to disable in sec, set to 0 for infinate time
+            - Default value is 0
         """
         try:
             resp = requests.get(url=TotalURL.format(IP,'disable='+str(Time),API))
@@ -103,13 +104,14 @@ class PiHole():
         except:
             logging.error('Error connecting to PiHole')
         
-    def GetTopItems(IP:str,API:str):
+    def GetTopItems(IP:str,API:str,TopNo:int=5):
         """
-        Get top 5 blocked/permitted items
+        Get top blocked/permitted items
         - IP: the PiHole mashine URL
         - API: PiHole API key
+        - TopNo: The no of top item to display
+            - Default value is 5
         """
-        TopNo=5
         try:
             resp = requests.get(url=TotalURL.format(IP,'topItems='+str(TopNo),API))
             logging.info('Getting data from PiHole address '+IP)
@@ -118,13 +120,14 @@ class PiHole():
         except:
             logging.error('Error connecting to PiHole')
             
-    def GetTopClients(IP:str,API:str):
+    def GetTopClients(IP:str,API:str,TopNo:int=5):
         """
-        Get top 5  client
+        Get top client
         - IP: the PiHole mashine URL
         - API: PiHole API key
+        - TopNo: The no of top item to display
+            - Default value is 5
         """
-        TopNo=5
         try:
             resp = requests.get(url=TotalURL.format(IP,'topClients='+str(TopNo),API))
             logging.info('Getting data from PiHole address '+IP)
@@ -133,13 +136,14 @@ class PiHole():
         except:
             logging.error('Error connecting to PiHole')
 
-    def GetTopClientsBlocked(IP:str,API:str):
+    def GetTopClientsBlocked(IP:str,API:str,TopNo:int=5):
         """
-        Get top 5 blocked client
+        Get top blocked client
         - IP: the PiHole mashine URL
         - API: PiHole API key
+        - TopNo: The no of top item to display
+            - Default value is 5
         """
-        TopNo=5
         try:
             resp = requests.get(url=TotalURL.format(IP,'topClientsBlocked='+str(TopNo),API))
             logging.info('Getting data from PiHole address '+IP)
@@ -155,10 +159,109 @@ class PiHole():
         - API: PiHole API key
         """
         try:
-            resp = requests.get(url=TotalURL.format(IP,'enable',API))
+            resp = requests.get(url=TotalURL.format(IP,'recentBlocked',API))
+            logging.info('Getting data from PiHole address '+IP)
+            data=resp.content
+            return data.decode("utf-8")
+        except:
+            logging.error('Error connecting to PiHole')
+    
+    def GetDestination(IP:str,API:str):
+        """
+        Get destinations in %
+        - IP: the PiHole mashine URL
+        - API: PiHole API key
+        """
+        try:
+            resp = requests.get(url=TotalURL.format(IP,'getForwardDestinationNames',API))
+            logging.info('Getting data from PiHole address '+IP)
+            data=resp.json()
+            return data['forward_destinations']
+        except:
+            logging.error('Error connecting to PiHole')
+            
+    def GetQueryTypes(IP:str,API:str):
+        """
+        Get query types in %
+        - IP: the PiHole mashine URL
+        - API: PiHole API key
+        """
+        try:
+            resp = requests.get(url=TotalURL.format(IP,'getQueryTypes',API))
+            logging.info('Getting data from PiHole address '+IP)
+            data=resp.json()
+            return data['querytypes']
+        except:
+            logging.error('Error connecting to PiHole')
+                  
+    def GetCacheInfo(IP:str,API:str):
+        """
+        Get cache info
+        - IP: the PiHole mashine URL
+        - API: PiHole API key
+        """
+        try:
+            resp = requests.get(url=TotalURL.format(IP,'getCacheInfo',API))
+            logging.info('Getting data from PiHole address '+IP)
+            data=resp.json()
+            return data['cacheinfo']
+        except:
+            logging.error('Error connecting to PiHole')
+            
+    def GetClientNames(IP:str,API:str):
+        """
+        Get clients names
+        - IP: the PiHole mashine URL
+        - API: PiHole API key
+        """
+        try:
+            resp = requests.get(url=TotalURL.format(IP,'getClientNames',API))
+            logging.info('Getting data from PiHole address '+IP)
+            data=resp.json()
+            return data['clients']
+        except:
+            logging.error('Error connecting to PiHole')
+
+    def GetOverTimeDataClients(IP:str,API:str):
+        """
+        Get data of clients over time
+        - IP: the PiHole mashine URL
+        - API: PiHole API key
+        """
+        try:
+            resp = requests.get(url=TotalURL.format(IP,'overTimeDataClients',API))
             logging.info('Getting data from PiHole address '+IP)
             data=resp.json()
             return data
+        except:
+            logging.error('Error connecting to PiHole')
+   
+    def GetOverTimeData10mins(IP:str,API:str):
+        """
+        Get data of blocked/total in last 10 min 
+        - IP: the PiHole mashine URL
+        - API: PiHole API key
+        """
+        try:
+            resp = requests.get(url=TotalURL.format(IP,'overTimeData10mins',API))
+            logging.info('Getting data from PiHole address '+IP)
+            data=resp.json()
+            return data
+        except:
+            logging.error('Error connecting to PiHole')
+        
+    def GetDnsPort(IP:str,API:str):
+        """
+        Get DNS port
+        - IP: the PiHole mashine URL
+        - API: PiHole API key
+        """
+        try:
+            resp = requests.get(url=TotalURL.format(IP,'dns-port',API))
+            logging.info('Getting data from PiHole address '+IP)
+            data=resp.json()['dns-port']
+            ans= 'DNS-Port:'+str(data)
+            return ans
         except:
             logging.error('Error connecting to PiHole')
         
@@ -178,12 +281,12 @@ class PiHole():
             logging.error('Error connecting to PiHole')
             return False
 
-    def AddBlack(IP:str,API:str,Domain:str):
+    def AddBlock(IP:str,API:str,Domain:str):
         """
-        Add domain to black list
+        Add domain to block list
         - IP: the PiHole mashine URL
         - API: PiHole API key
-        - Domain: domain to add to BLACK list
+        - Domain: domain to add to BLOCK list
         Return True is sucsess
         """
         try:
