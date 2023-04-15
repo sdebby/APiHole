@@ -3,6 +3,12 @@
 This is an easy python API module for comunicating with Pi Hole through API.
 Works with AdminLTE v. 3
 
+## Install:
+
+```bash
+pip install APiHole
+```
+
 ## Get your Pi Hole API key from here:
 
 ```bash
