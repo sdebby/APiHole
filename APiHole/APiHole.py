@@ -12,7 +12,7 @@ class PiHole():
     def GetSummary(IP:str,API:str):
         """
         Get PiHole summary
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         """
         try:
@@ -31,7 +31,7 @@ class PiHole():
     def GetStatus(IP:str,API:str):
         """
         Get PiHole status
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         """
         try:
@@ -46,7 +46,7 @@ class PiHole():
     def GetGravity(IP:str,API:str):
         """
         Get PiHole gravity status
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         """
         try:
@@ -60,7 +60,7 @@ class PiHole():
     def GetVer(IP:str):
         """
         Get PiHole API version
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         """
         try:
             TotalURLVer='http://{0}/admin/api.php?{1}'
@@ -75,7 +75,7 @@ class PiHole():
     def Enable(IP:str,API:str):
         """
         Enable PiHole
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         """
         try:
@@ -90,7 +90,7 @@ class PiHole():
     def Disable(IP:str,API:str,Time:int=0):
         """
         Disable PiHole
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         - Time: time to disable in sec, set to 0 for infinate time
             - Default value is 0
@@ -107,7 +107,7 @@ class PiHole():
     def GetTopItems(IP:str,API:str,TopNo:int=5):
         """
         Get top blocked/permitted items
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         - TopNo: The no of top item to display
             - Default value is 5
@@ -123,7 +123,7 @@ class PiHole():
     def GetTopClients(IP:str,API:str,TopNo:int=5):
         """
         Get top client
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         - TopNo: The no of top item to display
             - Default value is 5
@@ -139,7 +139,7 @@ class PiHole():
     def GetTopClientsBlocked(IP:str,API:str,TopNo:int=5):
         """
         Get top blocked client
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         - TopNo: The no of top item to display
             - Default value is 5
@@ -155,7 +155,7 @@ class PiHole():
     def GetRecentBlocked(IP:str,API:str):
         """
         Get recent block domain
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         """
         try:
@@ -169,7 +169,7 @@ class PiHole():
     def GetDestination(IP:str,API:str):
         """
         Get destinations in %
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         """
         try:
@@ -183,7 +183,7 @@ class PiHole():
     def GetQueryTypes(IP:str,API:str):
         """
         Get query types in %
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         """
         try:
@@ -197,7 +197,7 @@ class PiHole():
     def GetCacheInfo(IP:str,API:str):
         """
         Get cache info
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         """
         try:
@@ -211,7 +211,7 @@ class PiHole():
     def GetClientNames(IP:str,API:str):
         """
         Get clients names
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         """
         try:
@@ -225,7 +225,7 @@ class PiHole():
     def GetOverTimeDataClients(IP:str,API:str):
         """
         Get data of clients over time
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         """
         try:
@@ -239,7 +239,7 @@ class PiHole():
     def GetOverTimeData10mins(IP:str,API:str):
         """
         Get data of blocked/total in last 10 min 
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         """
         try:
@@ -253,7 +253,7 @@ class PiHole():
     def GetDnsPort(IP:str,API:str):
         """
         Get DNS port
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         """
         try:
@@ -268,10 +268,10 @@ class PiHole():
     def AddWhite(IP:str,API:str,Domain:str):
         """
         Add domain to white list
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         - Domain: domain to add to WHITE list
-        Return True is sucsess
+        Return True is success
         """
         try:
             resp = requests.get(url=TotalURL.format(IP,'list=white&add='+Domain,API))
@@ -284,13 +284,61 @@ class PiHole():
     def AddBlock(IP:str,API:str,Domain:str):
         """
         Add domain to block list
-        - IP: the PiHole mashine URL
+        - IP: the PiHole machine URL
         - API: PiHole API key
         - Domain: domain to add to BLOCK list
-        Return True is sucsess
+        Return True is success
         """
         try:
             resp = requests.get(url=TotalURL.format(IP,'list=black&add='+Domain,API))
+            logging.info('Getting data from PiHole address '+IP)
+            return True
+        except:
+            logging.error('Error connecting to PiHole')
+            return False
+
+    def RemoveBlock(IP:str,API:str,Domain:str):
+        """
+        Remove domain from block list
+        - IP: the PiHole machine URL
+        - API: PiHole API key
+        - Domain: domain to remove from BLOCK list
+        Return True is success
+        """
+        try:
+            resp = requests.get(url=TotalURL.format(IP,'list=black&sub='+Domain,API))
+            logging.info('Getting data from PiHole address '+IP)
+            return True
+        except:
+            logging.error('Error connecting to PiHole')
+            return False
+
+    def AddRegexBlock(IP:str,API:str,Domain:str):
+        """
+        Add regex domain to block list
+        - IP: the PiHole machine URL
+        - API: PiHole API key
+        - Domain: domain to add to BLOCK list
+        Return True is success
+        """
+        try:
+            resp = requests.get(url=TotalURL.format(IP,'list=regex_black&add='+Domain,API))
+            logging.info('Getting data from PiHole address '+IP)
+            return True
+        except:
+            logging.error('Error connecting to PiHole')
+            return False
+
+    def RemoveRegexBlock(IP:str,API:str,Domain:str):
+        """
+        Remove regex domain from block list
+        - IP: the PiHole machine URL
+        - API: PiHole API key
+        - Domain: domain to remove from BLOCK list
+        Return True is success
+        """
+        try:
+            resp = requests.get(url=TotalURL.format(IP,'list=regex_black&sub='+Domain,API))
             logging.info('Getting data from PiHole address '+IP)
             return True
         except:
