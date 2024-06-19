@@ -9,14 +9,18 @@ TotalURLWOa='http://{0}/admin/api.php?{1}'
 
 class PiHole():
 
-    def GetSummary(IP:str,API:str):
+    def GetSummary(IP:str,API:str,raw_data:str=False):
         """
         Get PiHole summary
         - IP: the PiHole machine URL
         - API: PiHole API key
         """
+        if raw_data:
+            summaryURL = 'summaryRaw'
+        else:
+            summaryURL='summary'
         try:
-            resp = requests.get(url=TotalURL.format(IP,'summary',API))
+            resp = requests.get(url=TotalURL.format(IP,summaryURL,API))
             logging.info('Getting data from PiHole address '+IP)
             data=resp.json()
             data.pop('gravity_last_updated')
