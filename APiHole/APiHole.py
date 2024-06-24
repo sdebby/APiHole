@@ -9,7 +9,7 @@ TotalURLWOa='http://{0}/admin/api.php?{1}'
 
 class PiHole():
 
-    def GetSummary(IP:str,API:str,raw_data:str=False):
+    def GetSummary(IP:str,API:str,raw_data:bool=False):
         """
         Get PiHole summary
         - IP: the PiHole machine URL
