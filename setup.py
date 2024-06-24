@@ -8,7 +8,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description1 = "\n" + fh.read()
 
-VERSION = '0.0.1'
+VERSION = '0.0.3'
 DESCRIPTION = 'API module for Pi Hole'
 LONG_DESCRIPTION = 'Python API module for comunicating with Pi Hole server, including all functions.'
 AUTHOR='Shmulik Debby'
