@@ -25,8 +25,11 @@ PiIP='your pi hole IP'
 # Print API version (good for testing communication), (return string)
 print(PiHole.GetVer(PiIP))
 
-# get PiHole summary , (return dict)
-PiHole.GetSummary(PiIP,PiHoleAPI)
+# get PiHole summary style format, (return dict)
+print(PiHole.GetSummary(PiIP,PiHoleAPI,False))
+
+# get PiHole summary raw format, (return dict)
+print(PiHole.GetSummary(PiIP,PiHoleAPI,True))
 
 # get PiHole gravity status , (return dict)
 print(PiHole.GetGravity(PiIP,PiHoleAPI))
