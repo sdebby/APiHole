@@ -3,9 +3,11 @@ from APiHole import PiHole
 PiHoleAPI='PiHole_API'
 PiIP='pi.hole'
 
-# get PiHole summary
-print(PiHole.GetSummary(PiIP,PiHoleAPI))
+# get PiHole summary style format
+print(PiHole.GetSummary(PiIP,PiHoleAPI,False))
 
+# get PiHole summary raw format
+print(PiHole.GetSummary(PiIP,PiHoleAPI,True))
 # get PiHole status
 print(PiHole.GetStatus(PiIP,PiHoleAPI))
 
