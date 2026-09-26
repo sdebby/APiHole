@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0 (unreleased)
+## 1.0.0 (2026-09-26)
 
 A rewrite for the Pi-hole v6 REST API. It does not work with Pi-hole v5; for
 v5, use `APiHole==0.0.3`.
